@@ -10,7 +10,7 @@ from obspy import read, Stream, UTCDateTime, read_inventory
 
 global SAC_PATH, OUTPUT_DIR
 SAC_PATH = "/storage/vast-gfz-hpc-01/project/seismic_data_qi/seismic/EU/Illgraben/"
-OUTPUT_DIR = "/storage/vast-gfz-hpc-01/home/qizhou/1projects/" # set your output path
+OUTPUT_DIR = "/your/path/to/output/" # set your output path
 
 print(SAC_PATH)
 
@@ -35,18 +35,18 @@ def load_seismic_signal(data_start, data_end, station, component="EHZ", remove_s
     sac_dir = f"{SAC_PATH}{d1.year}/{station}/{component}/"
 
     if d1.year in [2013, 2014]:
-        seismic_network = "GM"
+        seismic_network = "9J"
     elif d1.year in [2017, 2018, 2019, 2020]:
         seismic_network = "9S"
 
 
     if d1.julday == d2.julday:
-        data_name = f"{seismic_network}.{station}.{component}.{d1.year}.{str(d1.julday).zfill(3)}"
+        data_name = f"{seismic_network}.{station}.{component}.{d1.year}.{str(d1.julday).zfill(3)}.mseed"
         st = read(sac_dir + data_name)
     else:
         st = Stream()
         for n in np.arange(d1.julday, d2.julday+1):
-            data_name = f"{seismic_network}.{station}.{component}.{d1.year}.{str(n).zfill(3)}"
+            data_name = f"{seismic_network}.{station}.{component}.{d1.year}.{str(n).zfill(3)}.mseed"
             st += read(sac_dir + data_name)
 
 
@@ -64,6 +64,6 @@ def load_seismic_signal(data_start, data_end, station, component="EHZ", remove_s
 
     return st
 
-data_start, data_end, station = "2017-06-09 12:00:00", "2017-06-09 18:00:00", "ILL12"
+data_start, data_end, station = "2017-06-09 12:00:00", "2017-06-09 18:00:00", "ILL02"
 st = load_seismic_signal(data_start, data_end, station, component="EHZ", remove_sensor_response=False)
 st.plot(outfile=f"{OUTPUT_DIR}{data_start}")
