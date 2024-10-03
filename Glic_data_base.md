@@ -100,12 +100,19 @@ please do NOT overwrite or delete any file.
 ## 3, Access Seismic Data
 You can use this code to fetch and convert the seismic data to numpy,
 ```python
-example/read_data_from_Glic.py
+example/seismic_data_processing.py
+```
+please remember to update the path for
+```python
+# import CONFIG_dir as a global variable
+from config.config_dir import CONFIG_dir
+# import manually remove sensor response
+from calculate_features.remove_sensor_response import manually_remove_sensor_response
 ```
 
 ## 4, Download Data
 If you do not want to work on Glic, <br>
 you can download the seismic data to your local PC by FileZilla, <br>
-and run this code [read_data_from_Glic](./example/read_data_from_Glic.py) in Pycharm or VS code
+and run this code [read_data_from_Glic](./example/seismic_data_processing.py) in Pycharm or VS code
 
 personally, I higly suggested to perform your work on Glic and liberate you PC.
